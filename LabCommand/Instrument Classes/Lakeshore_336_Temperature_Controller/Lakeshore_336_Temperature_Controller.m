@@ -69,20 +69,37 @@ classdef Lakeshore_336_Temperature_Controller < handle      %% Class less than h
         
         end
         
-        function Set_All_Temperatures_Kelvin(obj, Value, Range)
+        function Set_All_Temperatures_Kelvin(obj, Value)
            % Sets_All_Temperatures at given Value and Range
            % Set All Ranges
            % Set Temperatures
+           Command = 'SETP';
+           Output = 1;
+           Command = [Command,num2str(Output),',',num2str(Value)];
+           fprintf(obj.Serial_Object, Command);
+           pause(0.08)
+           Output2 = 2;
+           Command2 = [Command,num2str(Output2),',',num2str(Value)];
+           fprintf(obj.Serial_Object, Command2);
+           
         end
         
          function Set_Temperature_Setpoint_1(obj, Value)
            % Sets__Temperature at given Value and Range
            % Set Temperature
+           Command = 'SETP';
+           Output = 1;
+           Command = [Command,num2str(Output),',',num2str(Value)];
+           fprintf(obj.Serial_Object, Command);
          end
         
         function Set_Temperature_Setpoint_2(obj, Value)
            % Sets__Temperature at given Value and Range
            % Set Temperature
+          Command = 'SETP';
+           Output = 2;
+           Command = [Command,num2str(Output),',',num2str(Value)];
+           fprintf(obj.Serial_Object, Command);
         end
          
         function Get_Temperature_Setpoint(obj )
@@ -90,7 +107,42 @@ classdef Lakeshore_336_Temperature_Controller < handle      %% Class less than h
             obj.Setpoint_1 = query(obj.Serial_Object, 'SETP? 1');
             obj.Setpoint_2 = query(obj.Serial_Object, 'SETP? 2');
         end
-       
+        
+        
+        function Set_Heater_Range_All(obj,Value)
+            
+            Command = 'RANGE';
+           Output = 1;
+           Command = [Command,num2str(Output),',',Value];
+           fprintf(obj.Serial_Object, Command);
+           pause(0.08)
+           Output2 = 2;
+           Command2 = [Command,num2str(Output2),',',Value];
+           fprintf(obj.Serial_Object, Command2);
+           
+           
+        end
+        
+        
+        
+        function Set_Heater_Range_1(obj,Value)
+            
+            Command = 'RANGE';
+           Output = 1;
+           Command = [Command,num2str(Output),',',num2str(Value)];
+           fprintf(obj.Serial_Object, Command);
+           pause(0.08)
+        end
+        
+        
+            function Set_Heater_Range_2(obj,Value)    
+                Command = 'RANGE';
+                Output = 2;
+                Command = [Command,num2str(Output),',',num2str(Value)];
+                fprintf(obj.Serial_Object, Command);
+                
+               pause(0.08)
+            end
         function  Get_Heater_Range( obj )   
             %Queries controller for Heater Range Values and parses for
             %string value
